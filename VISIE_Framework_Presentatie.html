@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vision Web Agency · Het VISIE™ Framework</title>
+<style>
+:root{
+  --navy:#0B2437; --navy2:#0E2C44; --teal:#2AB3A6; --green:#22C55E;
+  --ink:#101828; --mut:#5B6B7A; --line:#E5E9EE; --bg:#F5F7F9; --card:#FFFFFF;
+  --blue:#2358E0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:-apple-system,"SF Pro Text","Segoe UI",Roboto,Inter,sans-serif;background:#0A1520;color:var(--ink);overflow:hidden}
+.deck{height:100vh;width:100vw;position:relative}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:56px 72px;overflow:hidden}
+.slide.on{display:flex;animation:fi .35s ease}
+@keyframes fi{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.s-dark{background:linear-gradient(150deg,#0B2437 0%,#0E3049 55%,#0B2437 100%);color:#fff}
+.s-light{background:var(--bg);color:var(--ink)}
+.eyebrow{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:var(--teal)}
+.s-dark .eyebrow{color:#4FD8C9}
+h1{font-size:52px;font-weight:750;letter-spacing:-1.2px;line-height:1.08;margin-top:18px}
+h2{font-size:34px;font-weight:720;letter-spacing:-.7px;margin-top:12px;line-height:1.15}
+.sub{font-size:17px;color:var(--mut);margin-top:16px;max-width:640px;line-height:1.6}
+.s-dark .sub{color:rgba(255,255,255,.72)}
+.tm{font-style:normal;font-size:.62em;vertical-align:super}
+.foot{margin-top:auto;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--mut);padding-top:24px}
+.s-dark .foot{color:rgba(255,255,255,.45)}
+.foot .pg{margin-left:auto}
+.logo{display:flex;align-items:center;gap:9px;font-weight:750;letter-spacing:2.5px;font-size:14px}
+.logo i{width:9px;height:9px;border-radius:50%;background:var(--green);display:inline-block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:36px}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:40px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;box-shadow:0 1px 3px rgba(16,24,40,.05)}
+.box h4{font-size:15.5px;font-weight:700}
+.box p{font-size:13.5px;color:var(--mut);margin-top:8px;line-height:1.6}
+.neg{border-top:3px solid #E4695E}
+.pos{border-top:3px solid var(--green)}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:14px;margin-bottom:14px}
+.tag.r{background:#FDECEA;color:#C0392B}
+.tag.g{background:#E7F8EE;color:#15803D}
+.li{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;line-height:1.55;margin-top:12px}
+.li b{font-weight:650}
+.li .x{color:#C0392B;font-weight:800;flex-shrink:0}
+.li .v{color:#15803D;font-weight:800;flex-shrink:0}
+.lb{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;font-size:23px;font-weight:800;background:linear-gradient(135deg,#0E3049,#16486B);color:#4FD8C9}
+.fw h4{margin-top:16px;font-size:16px}
+.fw p{font-size:12.8px}
+.num{font-variant-numeric:tabular-nums}
+.big{font-size:30px;font-weight:750;letter-spacing:-.6px}
+.res .big{color:var(--navy)}
+.res p{margin-top:6px}
+.cta{display:inline-block;background:var(--green);color:#fff;font-weight:700;font-size:15px;padding:13px 30px;border-radius:10px;margin-top:30px}
+.nav{position:fixed;bottom:18px;right:22px;display:flex;gap:8px;z-index:50}
+.nav button{background:rgba(255,255,255,.9);border:1px solid var(--line);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:15px;color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:50}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(120,140,160,.4);cursor:pointer}
+.dots i.on{background:var(--teal);width:20px;border-radius:5px}
+
+/* ===== mini dashboard mock ===== */
+.mock{background:#F6F7F9;border:1px solid #DDE2E8;border-radius:12px;overflow:hidden;box-shadow:0 18px 50px rgba(11,36,55,.18);font-size:10px}
+.m-top{background:var(--navy);color:#fff;padding:8px 13px;display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:600}
+.m-top .md{color:rgba(255,255,255,.45);font-weight:400}
+.m-top .ms{margin-left:auto;background:rgba(255,255,255,.12);border-radius:5px;padding:3px 9px;color:rgba(255,255,255,.5);font-size:9px}
+.m-body{display:flex}
+.m-side{width:112px;background:#fff;border-right:1px solid #E8EBEF;padding:8px 6px}
+.m-nv{padding:5.5px 8px;border-radius:6px;color:#66788A;margin-bottom:1px;font-weight:500;font-size:9.5px;display:flex;justify-content:space-between}
+.m-nv.on{background:#EFF4FF;color:#2358E0;font-weight:650}
+.m-nv .b{background:#2358E0;color:#fff;border-radius:8px;padding:0 5px;font-size:8px;font-weight:700}
+.m-nv .b.w{background:#22C55E}
+.m-main{flex:1;padding:10px 12px}
+.m-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.m-kpi{background:#fff;border:1px solid #E8EBEF;border-radius:8px;padding:8px 10px}
+.m-kpi .l{color:#8695A5;font-size:8.5px;font-weight:600}
+.m-kpi .v{font-size:14.5px;font-weight:700;margin-top:3px;letter-spacing:-.3px}
+.m-kpi .d{font-size:8px;color:#15803D;background:#E7F8EE;border-radius:6px;padding:1px 5px;font-weight:700}
+.m-row{display:grid;grid-template-columns:1.7fr 1.1fr;gap:7px;margin-top:7px}
+.m-card{background:#fff;border:1px solid #E8EBEF;border-radius:8px;padding:9px 11px}
+.m-card .t{color:#8695A5;font-size:8.5px;font-weight:600;margin-bottom:6px}
+.m-fi{display:flex;gap:6px;align-items:center;padding:4.5px 0;border-bottom:1px solid #F0F2F5;font-size:9px}
+.m-fi:last-child{border:none}
+.m-fi .ic{width:16px;height:16px;border-radius:5px;display:grid;place-items:center;font-weight:700;font-size:8px;flex-shrink:0}
+.m-fi .n{font-weight:600}
+.m-fi .s{color:#8695A5;font-size:8px}
+.m-fi .tm2{margin-left:auto;color:#AAB4C0;font-size:8px}
+.m-toast{position:absolute;top:44px;right:14px;background:rgba(255,255,255,.98);border:1px solid #DDE2E8;border-radius:9px;padding:7px 10px;display:flex;gap:7px;align-items:center;box-shadow:0 8px 24px rgba(16,24,40,.16);font-size:9px;animation:tin 1s ease .8s both}
+@keyframes tin{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.m-toast .wic{width:20px;height:20px;border-radius:6px;background:#25D366;display:grid;place-items:center;color:#fff;font-weight:800;font-size:10px}
+.m-toast b{font-size:9px}
+.m-toast span{color:#8695A5;display:block;font-size:8.5px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:7px 15px;font-size:13px;font-weight:600;margin:6px 8px 0 0}
+.chip i{width:8px;height:8px;border-radius:50%}
+@media(max-width:1024px){
+  .grid5{grid-template-columns:repeat(2,1fr)}
+  .grid5 .box:last-child{grid-column:1/-1}
+}
+@media(max-width:820px){
+  .slide{display:none;padding:26px 20px calc(96px + env(safe-area-inset-bottom));overflow-y:auto}
+  .slide.on{display:block;animation:fi .3s ease}
+  .s-dark .logo{margin-bottom:26px}
+  .slide.s-dark > div[style*="margin:auto"]{margin:0 !important}
+  h1{font-size:clamp(28px,8.5vw,36px);margin-top:12px}
+  h2{font-size:clamp(21px,6.4vw,26px)}
+  .sub{font-size:14.5px;margin-top:12px}
+  .eyebrow{font-size:10.5px;letter-spacing:2px}
+  .grid2,.grid3,.grid5{grid-template-columns:1fr;gap:11px;margin-top:22px}
+  .grid5 .box:last-child{grid-column:auto}
+  .box{padding:17px 18px;border-radius:12px}
+  .box p{font-size:13px}
+  .li{font-size:13.5px;margin-top:10px}
+  .lb{width:42px;height:42px;font-size:19px;border-radius:11px}
+  .fw h4{margin-top:12px}
+  .big{font-size:24px}
+  .chip{font-size:12px;padding:6px 12px;margin:5px 6px 0 0}
+  .cta{display:block;text-align:center;margin-top:24px;padding:14px}
+  .foot{position:static;margin-top:26px;padding-top:16px;border-top:1px solid rgba(128,140,155,.18)}
+  .slide > div[style*="grid-template-columns:1fr 1.25fr"]{display:block !important}
+  .mockwrap{margin-top:26px}
+  .mock{font-size:9px;box-shadow:0 10px 30px rgba(11,36,55,.16)}
+  .m-side{width:84px;padding:6px 4px}
+  .m-nv{font-size:8.5px;padding:5px 6px}
+  .m-top .ms{display:none}
+  .m-kpi .v{font-size:12.5px}
+  .m-toast{top:38px;right:8px;max-width:78%}
+  .nav button{width:46px;height:46px;font-size:17px;border-radius:12px}
+  .nav{bottom:calc(14px + env(safe-area-inset-bottom));right:16px}
+  .dots{bottom:calc(26px + env(safe-area-inset-bottom));left:20px;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 COVER -->
+  <section class="slide s-dark on">
+    <div class="logo"><i></i>VISION WEB AGENCY</div>
+    <div style="margin:auto 0;max-width:860px">
+      <div class="eyebrow">Groeipartner voor ondernemers</div>
+      <h1>Het VISIE<span class="tm">™</span> Framework</h1>
+      <div class="sub" style="font-size:19px">Geen website die er alleen maar staat, maar één systeem dat aanvragen binnenhaalt, alles koppelt en elke maand beter wordt. Terwijl jij onderneemt.</div>
+    </div>
+    <div class="foot"><span>Vision Web Agency · Amsterdam</span><span class="pg">1 / 9</span></div>
+  </section>
+
+  <!-- 2 HET PROBLEEM -->
+  <section class="slide s-light">
+    <div class="eyebrow">Het probleem</div>
+    <h2>De meeste ondernemers werken ín hun bedrijf.<br>Niet eraan.</h2>
+    <div class="sub">De helft van de week gaat op aan bijzaken die geen euro opleveren. Herkenbaar?</div>
+    <div class="grid3">
+      <div class="box"><h4>Alles staat los</h4><p>De website bij de ene partij, facturen in een andere tool, aanvragen verspreid over mail, telefoon en WhatsApp. Tien tabbladen open, nul overzicht.</p></div>
+      <div class="box"><h4>Geen idee wat het oplevert</h4><p>Er is een website en er zijn kosten. Maar hoeveel aanvragen komen eruit? Wat kost een klant? Niemand die het weet.</p></div>
+      <div class="box"><h4>De bouwer is verdwenen</h4><p>Na de oplevering wordt het stil. Elke wijziging is een losse factuur, elke vraag duurt een week. De site veroudert, de concurrent loopt in.</p></div>
+    </div>
+    <div class="foot"><span>Vision Web Agency</span><span class="pg">2 / 9</span></div>
+  </section>
+
+  <!-- 3 WEBSITE VS SYSTEEM -->
+  <section class="slide s-light">
+    <div class="eyebrow">Het verschil</div>
+    <h2>Een website die er staat, tegenover een systeem dat werkt</h2>
+    <div class="grid2">
+      <div class="box neg">
+        <span class="tag r">Website</span>
+        <div class="li"><span class="x">✕</span><span>Opgeleverd en daarna <b>statisch</b>: hij veroudert vanaf dag één</span></div>
+        <div class="li"><span class="x">✕</span><span>Aanvragen komen binnen in een <b>mailbox</b> en raken kwijt</span></div>
+        <div class="li"><span class="x">✕</span><span><b>Geen cijfers</b>, dus geen idee wat werkt en wat niet</span></div>
+        <div class="li"><span class="x">✕</span><span>Marketing, facturatie en planning zijn <b>jouw probleem</b></span></div>
+        <div class="li"><span class="x">✕</span><span>Iedereen kan er tegenwoordig één maken, in vijf minuten</span></div>
+      </div>
+      <div class="box pos">
+        <span class="tag g">Systeem</span>
+        <div class="li"><span class="v">✓</span><span>Website, aanvragen, facturen en cijfers <b>op één plek</b></span></div>
+        <div class="li"><span class="v">✓</span><span>Elke aanvraag wordt <b>vastgelegd en opgevolgd</b>, niks raakt kwijt</span></div>
+        <div class="li"><span class="v">✓</span><span>Je ziet <b>live wat elke euro oplevert</b>, per kanaal</span></div>
+        <div class="li"><span class="v">✓</span><span>Wijzigingen, onderhoud en optimalisatie <b>zijn geregeld</b></span></div>
+        <div class="li"><span class="v">✓</span><span>Wordt <b>elke maand beter</b>, en groeit met je bedrijf mee</span></div>
+      </div>
+    </div>
+    <div class="foot"><span>Vision Web Agency</span><span class="pg">3 / 9</span></div>
+  </section>
+
+  <!-- 4 HET FRAMEWORK -->
+  <section class="slide s-light">
+    <div class="eyebrow">Onze methode</div>
+    <h2>Vijf stappen, één systeem: VISIE<span class="tm">™</span></h2>
+    <div class="grid5">
+      <div class="box fw"><div class="lb">V</div><h4>Verkenning</h4><p>We analyseren jouw bedrijf, je doelen en waar nu tijd en aanvragen weglekken.</p></div>
+      <div class="box fw"><div class="lb">I</div><h4>Integratie</h4><p>Alles wat los staat wordt gekoppeld: aanvragen, WhatsApp, betalingen, campagnes, agenda.</p></div>
+      <div class="box fw"><div class="lb">S</div><h4>Systeem</h4><p>Eén portaal waarin je hele online verhaal samenkomt en waar niets meer kwijtraakt.</p></div>
+      <div class="box fw"><div class="lb">I</div><h4>Impact</h4><p>Het gezicht: een website waar je trots op bent, gebouwd om van bezoekers aanvragen te maken.</p></div>
+      <div class="box fw"><div class="lb">E</div><h4>Evolutie</h4><p>Elke maand rapportage en optimalisatie. Jij groeit, het systeem groeit mee.</p></div>
+    </div>
+    <div class="sub" style="margin-top:30px">Dit is geen pakket van losse diensten, maar één doorlopende aanpak. Daarom noemen wij het een framework.</div>
+    <div class="foot"><span>Vision Web Agency</span><span class="pg">4 / 9</span></div>
+  </section>
+
+  <!-- 5 HET PORTAAL -->
+  <section class="slide s-light">
+    <div style="display:grid;grid-template-columns:1fr 1.25fr;gap:44px;align-items:center;flex:1">
+      <div>
+        <div class="eyebrow">Het systeem in de praktijk</div>
+        <h2>Jouw eigen portaal.<br>Alles op één plek.</h2>
+        <div class="li" style="margin-top:22px"><span class="v">✓</span><span><b>Aanvragen</b> uit alle kanalen automatisch vastgelegd en toegewezen</span></div>
+        <div class="li"><span class="v">✓</span><span><b>WhatsApp</b> gekoppeld: berichten worden direct een aanvraag</span></div>
+        <div class="li"><span class="v">✓</span><span><b>Campagnes</b> van Meta en Google live inzichtelijk, met kosten per aanvraag</span></div>
+        <div class="li"><span class="v">✓</span><span><b>Facturen</b> met iDEAL-betaallink en automatische herinneringen</span></div>
+        <div class="li"><span class="v">✓</span><span><b>Maandrapportage</b> automatisch in je inbox</span></div>
+      </div>
+      <div class="mockwrap" style="position:relative">
+        <div class="mock">
+          <div class="m-top">Van Dijk &amp; Partners <span class="md">Klantportaal</span><span class="ms">Zoek aanvragen, facturen…</span></div>
+          <div class="m-body">
+            <div class="m-side">
+              <div class="m-nv on">Overzicht</div>
+              <div class="m-nv">Aanvragen <span class="b">3</span></div>
+              <div class="m-nv">WhatsApp <span class="b w">2</span></div>
+              <div class="m-nv">Campagnes</div>
+              <div class="m-nv">SEO</div>
+              <div class="m-nv">Website</div>
+              <div class="m-nv">Facturen</div>
+              <div class="m-nv">Rapportages</div>
+            </div>
+            <div class="m-main">
+              <div class="m-kpis num">
+                <div class="m-kpi"><div class="l">AANVRAGEN</div><div class="v">47</div><span class="d">+38%</span></div>
+                <div class="m-kpi"><div class="l">IN BEHANDELING</div><div class="v">€ 342K</div><span class="d" style="color:#66788A;background:#F0F2F5">12 dossiers</span></div>
+                <div class="m-kpi"><div class="l">PER AANVRAAG</div><div class="v">€ 26</div><span class="d">-18%</span></div>
+                <div class="m-kpi"><div class="l">BEZOEKERS</div><div class="v">6.418</div><span class="d">+22%</span></div>
+              </div>
+              <div class="m-row">
+                <div class="m-card">
+                  <div class="t">AANVRAGEN PER WEEK</div>
+                  <svg viewBox="0 0 300 78" width="100%" height="78" preserveAspectRatio="none">
+                    <g stroke="#EEF0F3" stroke-width="1"><line x1="0" y1="18" x2="300" y2="18"/><line x1="0" y1="40" x2="300" y2="40"/><line x1="0" y1="62" x2="300" y2="62"/></g>
+                    <path d="M0,66 L30,62 L60,64 L90,57 L120,59 L150,50 L180,53 L210,42 L240,45 L270,33 L300,24" fill="none" stroke="#C6CCD6" stroke-width="1.2" stroke-dasharray="3 3"/>
+                    <path d="M0,60 L30,55 L60,50 L90,53 L120,42 L150,45 L180,34 L210,37 L240,26 L270,20 L300,12" fill="none" stroke="#2358E0" stroke-width="1.8"/>
+                  </svg>
+                </div>
+                <div class="m-card">
+                  <div class="t">RECENTE ACTIVITEIT</div>
+                  <div class="m-fi"><div class="ic" style="background:#ECFDF3;color:#079455">W</div><div><div class="n">Taxatie aanvraag</div><div class="s">Mark Jansen · WhatsApp</div></div><span class="tm2">11:58</span></div>
+                  <div class="m-fi"><div class="ic" style="background:#EFF8FF;color:#1877F2">M</div><div><div class="n">Bezichtiging</div><div class="s">Lisa van Kampen · Meta</div></div><span class="tm2">12:41</span></div>
+                  <div class="m-fi"><div class="ic" style="background:#F2F4F7;color:#667085">€</div><div><div class="n">Factuur betaald</div><div class="s">€ 750 · iDEAL</div></div><span class="tm2">09:12</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="m-toast"><div class="wic">W</div><div><b>Nieuwe aanvraag via WhatsApp</b><span>Sander de Boer · waardebepaling</span></div></div>
+      </div>
+    </div>
+    <div class="foot"><span>Vision Web Agency</span><span class="pg">5 / 9</span></div>
+  </section>
+
+  <!-- 6 KOPPELINGEN -->
+  <section class="slide s-light">
+    <div class="eyebrow">Integraties</div>
+    <h2>Gekoppeld aan de systemen die je al gebruikt</h2>
+    <div class="sub">Geen nieuwe werkwijze leren. Het portaal haalt alles op en zet het op één plek.</div>
+    <div style="margin-top:30px;max-width:820px">
+      <span class="chip"><i style="background:#25D366"></i>WhatsApp Business</span>
+      <span class="chip"><i style="background:#1877F2"></i>Meta Ads</span>
+      <span class="chip"><i style="background:#F4B400"></i>Google Ads</span>
+      <span class="chip"><i style="background:#E37400"></i>Google Analytics</span>
+      <span class="chip"><i style="background:#2358E0"></i>Mollie / iDEAL</span>
+      <span class="chip"><i style="background:#15803D"></i>Agenda</span>
+      <span class="chip"><i style="background:#667085"></i>E-mail</span>
+    </div>
+    <div class="grid3" style="margin-top:34px">
+      <div class="box"><h4>Bericht wordt aanvraag</h4><p>Een appje of formulier wordt automatisch een dossier met naam, bron en status. Niks raakt meer kwijt in een inbox.</p></div>
+      <div class="box"><h4>Cijfers zonder zoeken</h4><p>Kosten per aanvraag, per kanaal, live. Je opent één scherm in plaats van vier accounts.</p></div>
+      <div class="box"><h4>Betaald zonder gedoe</h4><p>Facturen met iDEAL-link en automatische herinneringen. Gemiddelde betaaltermijn bij onze klanten: 6 dagen.</p></div>
+    </div>
+    <div class="foot"><span>Vision Web Agency</span><span class="pg">6 / 9</span></div>
+  </section>
+
+  <!-- 7 RESULTATEN -->
+  <section class="slide s-light">
+    <div class="eyebrow">Resultaten van klanten</div>
+    <h2>Dit levert het op</h2>
+    <div class="grid3 res">
+      <div class="box"><div class="big num">€ 300.000</div><p>aan offerteaanvragen binnen 3 maanden · verandaspecialist</p></div>
+      <div class="box"><div class="big num">30+</div><p>nieuwe klanten per maand via de website · administratiekantoor</p></div>
+      <div class="box"><div class="big num">+124%</div><p>directe boekingen, minder afhankelijk van Booking · hotel</p></div>
+      <div class="box"><div class="big num">63%</div><p>meer offerteaanvragen na lancering · duurzame installaties</p></div>
+      <div class="box"><div class="big num">+82%</div><p>registraties bij lancering nieuw platform · tech</p></div>
+      <div class="box" style="background:var(--navy);border-color:var(--navy)"><div class="big" style="color:#4FD8C9">4.9 ★</div><p style="color:rgba(255,255,255,.7)">op Google · 100+ bedrijven gingen je voor</p></div>
+    </div>
+    <div class="foot"><span>Vision Web Agency · resultaten van bestaande klanten, geen garanties</span><span class="pg">7 / 9</span></div>
+  </section>
+
+  <!-- 8 GROWTH PLAN -->
+  <section class="slide s-light">
+    <div class="eyebrow">Hoe we samenwerken</div>
+    <h2>Het VISIE<span class="tm">™</span> Growth Plan</h2>
+    <div class="grid2" style="align-items:start">
+      <div class="box">
+        <span class="tag g">Eenmalig</span>
+        <h4 style="font-size:17px">De basis: jouw systeem</h4>
+        <div class="li"><span class="v">✓</span><span>Verkenning en plan op maat</span></div>
+        <div class="li"><span class="v">✓</span><span>Premium website, gebouwd op aanvragen</span></div>
+        <div class="li"><span class="v">✓</span><span>Portaal ingericht en alles gekoppeld</span></div>
+        <div class="li"><span class="v">✓</span><span>Live binnen 4 weken</span></div>
+      </div>
+      <div class="box" style="border:2px solid var(--green)">
+        <span class="tag g">Maandelijks</span>
+        <h4 style="font-size:17px">De groei: wij blijven erbij</h4>
+        <div class="li"><span class="v">✓</span><span>Portaal, hosting, onderhoud en updates</span></div>
+        <div class="li"><span class="v">✓</span><span>Wijzigingen inbegrepen, binnen 2 werkdagen</span></div>
+        <div class="li"><span class="v">✓</span><span>Maandelijkse groeirapportage en optimalisatie</span></div>
+        <div class="li"><span class="v">✓</span><span>Reactie binnen 1 uur op werkdagen</span></div>
+      </div>
+    </div>
+    <div class="sub" style="margin-top:26px">Geen websitebouwer die je nooit meer spreekt, maar een groeipartner die alles voor je beheert.</div>
+    <div class="foot"><span>Vision Web Agency</span><span class="pg">8 / 9</span></div>
+  </section>
+
+  <!-- 9 NEXT STEP -->
+  <section class="slide s-dark">
+    <div class="logo"><i></i>VISION WEB AGENCY</div>
+    <div style="margin:auto 0;max-width:800px">
+      <div class="eyebrow">De volgende stap</div>
+      <h1 style="font-size:42px">Zie het eerst.<br>Beslis daarna.</h1>
+      <div class="sub" style="font-size:17px">We plannen een korte call en doen samen een business scan: waar lekken nu tijd en aanvragen weg. Daarna ontvang je vrijblijvend het ontwerp van jouw nieuwe homepage. Bevalt het niet, dan kost het je niets.</div>
+      <span class="cta">Plan de business scan</span>
+      <div style="margin-top:26px;font-size:13px;color:rgba(255,255,255,.55)">visionwebagency.nl · reactie binnen 1 uur · vrijblijvend en zonder verplichtingen</div>
+    </div>
+    <div class="foot"><span>Vision Web Agency · Amsterdam</span><span class="pg">9 / 9</span></div>
+  </section>
+
+</div>
+
+<div class="dots" id="dots"></div>
+<div class="nav">
+  <button id="prev">←</button><button id="next">→</button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const dots=document.getElementById('dots');
+slides.forEach((s,i)=>{const d=document.createElement('i');if(i===0)d.classList.add('on');d.addEventListener('click',()=>go(i));dots.appendChild(d)});
+let cur=0;
+function go(i){
+  if(i<0||i>=slides.length)return;
+  slides[cur].classList.remove('on');
+  dots.children[cur].classList.remove('on');
+  cur=i;
+  slides[cur].classList.add('on');
+  dots.children[cur].classList.add('on');
+}
+document.getElementById('next').addEventListener('click',()=>go(cur+1));
+document.getElementById('prev').addEventListener('click',()=>go(cur-1));
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')go(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);
+});
+let tx=0,ty=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){dx<0?go(cur+1):go(cur-1)}
+},{passive:true});
+</script>
+</body>
+</html>
